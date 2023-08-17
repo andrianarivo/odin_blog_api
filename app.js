@@ -3,9 +3,28 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const nconf = require('nconf');
+const mongoose = require('mongoose');
+const debug = require('debug')('app');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
+nconf.argv()
+  .env();
+
+const env = nconf.get('NODE_ENV') || 'dev';
+if (env === 'production') {
+  nconf.file({ file: path.join(__dirname, 'config.prod.json') });
+} else {
+  nconf.file({ file: path.join(__dirname, 'config.json') });
+}
+
+const mongoDB = nconf.get('mongoDB');
+const main = async () => {
+  await mongoose.connect(mongoDB);
+};
+main().catch((err) => debug(err));
 
 const app = express();
 

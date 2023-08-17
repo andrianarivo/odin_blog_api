@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <img src="blog_api.drawio.svg" style="background-color: #fff"/>
+  <img src="blog_api.drawio.svg"/>
   <br/>
 
 <h3><b>Blog API</b></h3>
