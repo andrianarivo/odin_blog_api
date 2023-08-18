@@ -8,4 +8,18 @@ const CommentSchema = new Schema({
   updated_at: Date,
 });
 
+CommentSchema.virtual('url').get(function handler() {
+  // no_inline
+  return `/api/posts/${this._id}`;
+});
+
+CommentSchema.virtual('author_url').get(function handler() {
+  // no_inline
+  return `/api/users/${this.author}`;
+});
+CommentSchema.virtual('post_url').get(function handler() {
+  // no_inline
+  return `/api/posts/${this.post}`;
+});
+
 module.exports = model('Comment', CommentSchema);
