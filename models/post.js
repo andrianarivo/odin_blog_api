@@ -8,4 +8,14 @@ const PostSchema = new Schema({
   updated_at: Date,
 });
 
+PostSchema.virtual('url').get(function handler() {
+  // no_inline
+  return `/api/posts/${this._id}`;
+});
+
+PostSchema.virtual('comments_url').get(function handler() {
+  // no_inline
+  return `/api/posts/${this._id}/comments`;
+});
+
 module.exports = model('Post', PostSchema);

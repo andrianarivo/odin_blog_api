@@ -6,9 +6,10 @@ const logger = require('morgan');
 const nconf = require('nconf');
 const mongoose = require('mongoose');
 const debug = require('debug')('app');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const apiRouter = require('./routes/api');
 
 nconf.argv()
   .env();
@@ -39,7 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', cors(), apiRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
