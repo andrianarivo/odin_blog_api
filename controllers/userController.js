@@ -111,7 +111,14 @@ exports.users_create = [
     .trim()
     .isLength({ min: 50 })
     .escape(),
-  body('email', 'Email is required').trim().isEmail().escape(),
+  body('email', 'Email is required')
+    .trim()
+    .isEmail()
+    .escape()
+    .custom(async (value) => {
+      const existingUser = await User.find({ email: value });
+      return !existingUser;
+    }),
   body('password', 'Password is required with 6 characters minimum').isLength({ min: 6 }),
   body('password_confirm', 'Passwords do not match').custom((value, { req }) => {
     const { password } = req.body;
